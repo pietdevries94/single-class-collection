@@ -1,0 +1,23 @@
+{
+  "name": "pietdevries94/single-class-collection",
+  "description": "An abstract class which provides provides an collection which only can only contain objects of a single class",
+  "license": "MIT",
+  "homepage": "https://laravel.com",
+  "authors": [
+    {
+      "name": "Piet de Vries",
+      "email": "piet@devries.tech"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^7.1",
+    "illuminate/support": "5.4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pietdevries94\\SingleClassCollection\\": "src/"
+    }
+  }
+}
