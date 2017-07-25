@@ -17,13 +17,18 @@ abstract class AbstractSingleClassCollection extends Collection
     public function __construct(array $items = [])
     {
         $this->validateCollectionClass();
+
+        if (!$this->areValidItems($items)) {
+            throw new \TypeError('All elements in array must be instances of '.$collectionClass);
+        }
+
         parent::__construct($items);
     }
 
     public function offsetSet($key, $value)
     {
         if (!$this->isValidItem($value)) {
-            throw new \TypeError('All items passed to an IssueCollection must by of type Issue');
+            throw new \TypeError('Value must be an instance of '.$collectionClass);
         }
         parent::offsetSet($key, $value);
     }
@@ -38,12 +43,19 @@ abstract class AbstractSingleClassCollection extends Collection
     }
 
     /**
-     * @param mixed $item
+     * @param mixed $itemOrArrayOfItems
      * @return bool
      */
-    protected function isValidItem(mixed $item): bool
+    protected function areValidItems(mixed $itemOrArrayOfItems): bool
     {
-        return ($item instanceof $this->collectionClass);
+        $array = is_a($itemOrArrayOfItems) ? $itemOrArrayOfItems : [$itemOrArrayOfItems];
+
+        foreach ($array as $item) {
+            if (!($item instanceof $this->collectionClass)) {
+                return $false;
+            }
+        }
+        return true;
     }
 
     /**
