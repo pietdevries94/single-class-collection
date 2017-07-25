@@ -25,6 +25,11 @@ abstract class AbstractSingleClassCollection extends Collection
         parent::__construct($items);
     }
 
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     * @throws \TypeError
+     */
     public function offsetSet($key, $value)
     {
         if (!$this->isValidItem($value)) {
@@ -43,12 +48,12 @@ abstract class AbstractSingleClassCollection extends Collection
     }
 
     /**
-     * @param mixed $itemOrArrayOfItems
+     * @param array|mixed $itemOrArrayOfItems
      * @return bool
      */
-    protected function areValidItems(mixed $itemOrArrayOfItems): bool
+    protected function areValidItems($itemOrArrayOfItems): bool
     {
-        $array = is_a($itemOrArrayOfItems) ? $itemOrArrayOfItems : [$itemOrArrayOfItems];
+        $array = is_array($itemOrArrayOfItems) ? $itemOrArrayOfItems : [$itemOrArrayOfItems];
 
         foreach ($array as $item) {
             if (!($item instanceof $this->collectionClass)) {
