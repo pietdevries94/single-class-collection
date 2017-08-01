@@ -48,6 +48,16 @@ abstract class AbstractSingleClassCollection extends Collection
     }
 
     /**
+     * @param array|string $value
+     * @param null $key
+     * @return Collection
+     */
+    public function pluck($value, $key = null): Collection
+    {
+        return collect($this)->pluck($value, $key);
+    }
+
+    /**
      * @param array|mixed $itemOrArrayOfItems
      * @return bool
      */
