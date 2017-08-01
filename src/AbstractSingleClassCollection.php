@@ -19,7 +19,7 @@ abstract class AbstractSingleClassCollection extends Collection
         $this->validateCollectionClass();
 
         if (!$this->areValidItems($items)) {
-            throw new \TypeError('All elements in array must be instances of '.$collectionClass);
+            throw new \TypeError('All elements in array must be instances of '.$this->collectionClass);
         }
 
         parent::__construct($items);
@@ -32,8 +32,8 @@ abstract class AbstractSingleClassCollection extends Collection
      */
     public function offsetSet($key, $value)
     {
-        if (!$this->isValidItem($value)) {
-            throw new \TypeError('Value must be an instance of '.$collectionClass);
+        if (!$this->areValidItems($value)) {
+            throw new \TypeError('Value '. (string) $value .' must be an instance of '.$this->collectionClass);
         }
         parent::offsetSet($key, $value);
     }
@@ -53,11 +53,14 @@ abstract class AbstractSingleClassCollection extends Collection
      */
     protected function areValidItems($itemOrArrayOfItems): bool
     {
+        if (!$itemOrArrayOfItems)
+            return true;
+
         $array = is_array($itemOrArrayOfItems) ? $itemOrArrayOfItems : [$itemOrArrayOfItems];
 
         foreach ($array as $item) {
             if (!($item instanceof $this->collectionClass)) {
-                return $false;
+                return false;
             }
         }
         return true;
